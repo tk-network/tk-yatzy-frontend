@@ -1,0 +1,6 @@
+version: '2'
+services:
+  vue-tk-yatzy-web:
+    build: ../
+    ports:
+      - "8092:8092"
