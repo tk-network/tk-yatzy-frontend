@@ -14,10 +14,6 @@ export default {
     async mounted() {
         await this.$store.dispatch("connect");
 
-        this.$store.state.ws["up"] = (data) => {
-            this.$store.state.ws.send(JSON.stringify(data));
-        }
-
         this.$store.state.ws.addEventListener("message", (event) => {
             let data = JSON.parse(event.data);
             if(["error"].includes(data.action)) return;

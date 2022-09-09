@@ -32,6 +32,9 @@ const store = createStore({
                 };
             });
         },
+        up({ state }, data) {
+            state.ws.send(JSON.stringify(data));
+        },
         disconnect({ state }) {
             state.ws.close();
         }

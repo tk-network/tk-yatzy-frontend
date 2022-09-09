@@ -48,10 +48,10 @@ export default {
     methods: {
         handleNext() {
             if(!this.$store.state.user.username) {
-                this.$store.state.ws.up({ action: "setUsername", data: this.data });
+                this.$store.dispatch("up", { action: "setUsername", data: this.data });
             } else if(!this.$store.state.user.room) {
                 if(this.data.length != 6) return;
-                this.$store.state.ws.up({ action: "setRoom", data: this.data });
+                this.$store.dispatch("up", { action: "setRoom", data: this.data });
             }
         }
     },

@@ -64,7 +64,7 @@ export default {
             if(i == 6) document.getElementById(`code-1`).select();
         },
         createRoom() {
-            this.$store.state.ws.up({ action: "createRoom", data: null });
+            this.$store.dispatch("up", { action: "createRoom", data: null });
         }
     },
     watch: {

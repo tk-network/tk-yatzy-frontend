@@ -60,10 +60,10 @@ export default {
             setTimeout(() => this.onRole = false, this.$cubeSpinTime * this.$cubeSpinCount)
 
             let notActiveCubes = Array.from({length: this.countCubes}, (_, i) => i + 1).filter(number => !this.activeCubes.includes(number))
-            this.$store.state.ws.up({ action: "roleTheCube", data: notActiveCubes });
+            this.$store.dispatch("up", { action: "roleTheCube", data: notActiveCubes });
         },
         newRound() {
-            this.$store.state.ws.up({ action: "nextRound", data: null });
+            this.$store.dispatch("up", { action: "nextRound", data: null });
         },
         toggleCube(position) {
             if(!this.roomData.room.numberOfThrows || this.$store.state.user.id != this.roomData.room.activeUser) return;
