@@ -11,20 +11,18 @@ export default {
     components: {
         Message,
     },
-    mounted() {
-        //this.$ws = new WebSocket(process.env.VUE_APP_WEBSOCKET_URL);
-        //console.log(this.$ws)
-        this.$ws.addEventListener("open", () => {
-            this.$ws["up"] = (data) => {
-                this.$ws.send(JSON.stringify(data));
-            }
-            this.$ws.addEventListener("message", (event) => {
-                let data = JSON.parse(event.data);
-                if(["error"].includes(data.action)) return;
-                this.$store.commit("getData", data);
-            });
+    async mounted() {
+        await this.$store.dispatch("connect");
+
+        this.$store.state.ws["up"] = (data) => {
+            this.$store.state.ws.send(JSON.stringify(data));
+        }
+
+        this.$store.state.ws.addEventListener("message", (event) => {
+            let data = JSON.parse(event.data);
+            if(["error"].includes(data.action)) return;
+            this.$store.commit("getData", data);
         });
-        
-    }
+    },
 };
 </script>

@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         setField() {
-            this.$ws.up({ action: "setField", data: this.field.id });
+            this.$store.state.ws.up({ action: "setField", data: this.field.id });
             this.$emit("resetActivation");
         }
     }

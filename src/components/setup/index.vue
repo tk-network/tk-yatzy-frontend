@@ -48,10 +48,10 @@ export default {
     methods: {
         handleNext() {
             if(!this.$store.state.user.username) {
-                this.$ws.up({ action: "setUsername", data: this.data });
+                this.$store.state.ws.up({ action: "setUsername", data: this.data });
             } else if(!this.$store.state.user.room) {
                 if(this.data.length != 6) return;
-                this.$ws.up({ action: "setRoom", data: this.data });
+                this.$store.state.ws.up({ action: "setRoom", data: this.data });
             }
         }
     },
@@ -68,15 +68,15 @@ export default {
     margin: auto;
 }
 
-@media screen and (orientation: landscape) { 
+@media only screen and (max-width: 400px) {
     .card {
-        width: 50%;
+        height: 100%;
     }
 }
 
-@media screen and (orientation: portrait) { 
+@media only screen and (min-width: 401px) {
     .card {
-        height: 100%;
+        width: 400px;
     }
 }
 </style>

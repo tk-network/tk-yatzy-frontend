@@ -52,11 +52,5 @@ app.use(Vue3Cookies, {
 
 app.config.globalProperties.$cubeSpinCount = 6;
 app.config.globalProperties.$cubeSpinTime = 300;
-app.config.globalProperties.$ws = new WebSocket(process.env.VUE_APP_WEBSOCKET_URL);
+
 app.mount("#app");
-/*app.config.globalProperties.$ws.addEventListener("open", () => {
-    app.config.globalProperties.$ws["up"] = (data) => {
-        app.config.globalProperties.$ws.send(JSON.stringify(data))
-    }
-    app.mount("#app");
-});*/
