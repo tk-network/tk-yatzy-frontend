@@ -12,6 +12,7 @@ const store = createStore({
                 setup: {},
                 room: {},
                 cube: {},
+                modal: {},
             }
         }
     },
