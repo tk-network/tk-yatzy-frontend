@@ -13,6 +13,7 @@ const store = createStore({
                 room: {},
                 cube: {},
                 modal: {},
+                message: {},
             }
         }
     },
@@ -25,20 +26,37 @@ const store = createStore({
         }
     },
     actions: {
-        async connect({ state }) {
+        async connect({ dispatch, state }) {
             state.ws = await new Promise((resolve) => {
                 const server = new WebSocket(process.env.VUE_APP_WEBSOCKET_URL)
                 server.onopen = () =>  {
                     resolve(server);
                 };
+
+                server.onmessage = (event) => {
+                    dispatch("onMessage", event)
+                };
+
+                server.onclose = () => {
+                    dispatch("reconnect");
+                }
             });
         },
         up({ state }, data) {
             state.ws.send(JSON.stringify(data));
         },
+        onMessage({commit}, event) {
+            let data = JSON.parse(event.data);
+            commit("getData", data);
+        },
+        reconnect({ dispatch }) {
+            setTimeout(() => {
+                dispatch("connect")
+            }, 2000)
+        },
         disconnect({ state }) {
             state.ws.close();
-        }
+        },
     }
 })
 

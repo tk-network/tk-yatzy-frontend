@@ -4,17 +4,15 @@
 
 <script>
 export default {
-    mounted() {
-        /*
-        if(!this.$store.state.ws) return;
-        this.$store.state.ws.addEventListener("message", (event) => {
-            let data = JSON.parse(event.data);
-
-            switch(data.action) {
-                case "error":
-                    return this.$toast.add({severity: 'error', summary: 'Fehler!', detail: data.data, life: 6000});
-            }
-        });*/
+    watch: {
+        "$store.state.data.message"(data) {
+            this.$toast.add({
+                severity: data.type,
+                summary: data.title,
+                detail: data.message,
+                life: 6000
+            });
+        }
     }
 }
 </script>
