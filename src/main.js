@@ -45,7 +45,7 @@ app.component('Sidebar', Sidebar);
 // PrimeVue end
 
 app.use(Vue3Cookies, {
-    expireTime: "80d",
+    expireTime: "30d",
     secure: true,
     sameSite: "lax",
 })

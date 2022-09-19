@@ -3,10 +3,8 @@ import { useCookies, globalCookiesConfig } from "vue3-cookies";
 
 globalCookiesConfig({
     expireTimes: "30d",
-    path: "/",
-    domain: "",
     secure: true,
-    sameSite: "None",
+    sameSite: "lax",
 });
 
 const { cookies } = useCookies();
@@ -27,7 +25,7 @@ const store = createStore({
     },
     mutations: {
         updateUser(state, params) {
-            if(params?.key == "id") cookies.set("user", params.value);
+            cookies.set(params.key, params.value);
             return state.user[params.key] = params.value;
         },
         getData(state, params) {
@@ -37,7 +35,7 @@ const store = createStore({
     actions: {
         async connect({ dispatch, state }) {
             state.ws = await new Promise((resolve) => {
-                const user = cookies.get("user") || state.data.setup.id || undefined;
+                const user = cookies.get("id") || state.data.setup.id || undefined;
                 const server = new WebSocket(process.env.VUE_APP_WEBSOCKET_URL, user)
 
                 server.onopen = () =>  {
@@ -52,6 +50,9 @@ const store = createStore({
                     dispatch("reconnect");
                 }
             });
+
+            if(cookies.isKey("username")) dispatch("up", { action: "setUsername", data: cookies.get("username") })
+            
         },
         up({ state }, data) {
             state.ws.send(JSON.stringify(data));
